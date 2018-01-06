@@ -198,7 +198,7 @@ SimpleGraph.prototype.update = function() {
   .attr("class", function(d) { return d === self.selected ? "selected" : null; })
   .attr("cx",    function(d) { return self.x(d.x); })
   .attr("cy",    function(d) { return self.y(d.y); })
-  .attr("r", 10.0)
+  .attr("r", 2.0)
   //.style("cursor", "ns-resize")
   //.on("mousedown.drag",  self.datapoint_drag())
   //.on("touchstart.drag", self.datapoint_drag());
