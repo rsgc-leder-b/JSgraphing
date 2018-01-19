@@ -3,7 +3,7 @@ sterKeyboardHandler = function(callback) {
   d3.select(window).on("keydown", callback);
 };
 
-SimpleGraph = function(elemid, options, data) {
+SimpleGraph = function(elemid, options, data, otherdata) {
 
   var xdatas = [];
   for (i=1; i<data.length; i++) {
@@ -413,4 +413,3 @@ SimpleGraph.prototype.update = function() {
       self.downy = self.y.invert(p[1]);
     }
   };
-
