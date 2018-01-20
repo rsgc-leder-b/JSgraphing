@@ -4,6 +4,17 @@ sterKeyboardHandler = function(callback) {
 };
 
 SimpleGraph = function(elemid, options, data, otherdata) {
+  var sYear = parseInt(otherdata[0]);
+  var sMonth = parseInt(otherdata[1]);
+  var sDay = parseInt(otherdata[2]);
+  var sHour = parseInt(otherdata[3]);
+  var sMin = parseInt(otherdata[4]);
+  var chamberSize = parseFloat(otherdata[5]);
+  var temperature = parseFloat(otherdata[6]);
+  var pressure = parseFloat(otherdata[7]);
+  var offset = parseFloat(otherdata[8]);
+  var gas = parseFloat(otherdata[9]);
+  var relay = parseInt(otherdata[10]);
 
   var xdatas = [];
   for (i=1; i<data.length; i++) {
@@ -11,11 +22,13 @@ SimpleGraph = function(elemid, options, data, otherdata) {
     var hr =parseInt(data[i].split(',')[0].split(':')[1]);
     var min=parseInt(data[i].split(',')[0].split(':')[2]);
     var sec=parseInt(data[i].split(',')[0].split(':')[3]);
-    xdatas[i-1]=new Date(2018,0,day,hr,min,sec);
+    xdatas[i-1]=new Date(sYear,sMonth,day+sDay,hr+sHour,min+sMin,sec);
   }
   var ydatas = [];
   for (i=1; i<data.length; i++) {
-    ydatas[i-1]=parseFloat(data[i].split(',')[1]);
+    //Activity (Ci/m3) = 3.815x10-5 x ADU x 1x102*RLY# / Chamber Size (cc) x Gas Correction (%)
+    var ADUreading=parseFloat(data[i].split(',')[1])+offset;
+    ydatas[i-1]=3.815*10^(-5)*ADUreading*10^(2*relay) / (chamberSize) * gas;
   }
   var min=ydatas[0];
   var max=ydatas[0];
